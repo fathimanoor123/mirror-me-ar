@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface HeaderProps {
   onARClick: () => void;
@@ -7,12 +8,11 @@ interface HeaderProps {
 const Header = ({ onARClick }: HeaderProps) => {
   const [activeLink, setActiveLink] = useState("ar");
 
-  const scrollToSection = (id: string) => {
-    setActiveLink(id);
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
+  const navigate = useNavigate();
+
+  const handleNavigation = (route: string, linkName: string) => {
+    setActiveLink(linkName);
+    navigate(route);
   };
 
   return (
@@ -24,22 +24,26 @@ const Header = ({ onARClick }: HeaderProps) => {
         
         <nav className="flex gap-8">
           <button
-            onClick={() => scrollToSection("categories")}
+            onClick={() => handleNavigation("/women", "women")}
             className={`text-lg font-semibold transition-colors hover:text-primary ${
-              activeLink === "categories" ? "text-primary" : "text-foreground"
+              activeLink === "women" ? "text-primary" : "text-foreground"
             }`}
           >
             Women
           </button>
           <button
-            onClick={() => scrollToSection("categories")}
-            className="text-lg font-semibold text-foreground transition-colors hover:text-primary"
+            onClick={() => handleNavigation("/men", "men")}
+            className={`text-lg font-semibold transition-colors hover:text-primary ${
+              activeLink === "men" ? "text-primary" : "text-foreground"
+            }`}
           >
             Men
           </button>
           <button
-            onClick={() => scrollToSection("categories")}
-            className="text-lg font-semibold text-foreground transition-colors hover:text-primary"
+            onClick={() => handleNavigation("/kids", "kids")}
+            className={`text-lg font-semibold transition-colors hover:text-primary ${
+              activeLink === "kids" ? "text-primary" : "text-foreground"
+            }`}
           >
             Kids
           </button>

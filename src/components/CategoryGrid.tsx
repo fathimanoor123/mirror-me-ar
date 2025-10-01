@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import womenImage from "@/assets/women-category.jpg";
 import menImage from "@/assets/men-category.jpg";
 import kidsImage from "@/assets/kids-category.jpg";
@@ -7,10 +8,12 @@ interface CategoryGridProps {
 }
 
 const CategoryGrid = ({ onCategoryClick }: CategoryGridProps) => {
+  const navigate = useNavigate();
+  
   const categories = [
-    { name: "Women", image: womenImage, label: "Women's Collection" },
-    { name: "Men", image: menImage, label: "Men's Collection" },
-    { name: "Kids", image: kidsImage, label: "Kids' Collection" }
+    { name: "Women", image: womenImage, label: "Women's Collection", route: "/women" },
+    { name: "Men", image: menImage, label: "Men's Collection", route: "/men" },
+    { name: "Kids", image: kidsImage, label: "Kids' Collection", route: "/kids" }
   ];
 
   return (
@@ -24,7 +27,7 @@ const CategoryGrid = ({ onCategoryClick }: CategoryGridProps) => {
           {categories.map((category, index) => (
             <button
               key={index}
-              onClick={() => onCategoryClick(category.label)}
+              onClick={() => navigate(category.route)}
               className="group relative overflow-hidden rounded-[var(--radius)] shadow-[var(--shadow-card)] hover:shadow-[0_8px_30px_hsl(330_100%_71%/0.4)] transition-all duration-300 transform hover:scale-105"
             >
               <div className="aspect-square relative">
