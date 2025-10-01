@@ -1,12 +1,40 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState } from "react";
+import Header from "@/components/Header";
+import HeroSection from "@/components/HeroSection";
+import HowItWorks from "@/components/HowItWorks";
+import CategoryGrid from "@/components/CategoryGrid";
+import CTADemo from "@/components/CTADemo";
+import ARModal from "@/components/ARModal";
 
 const Index = () => {
+  const [isARModalOpen, setIsARModalOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState("Live AR Try-On Demo");
+
+  const handleARClick = (productName: string = "Live AR Try-On Demo") => {
+    setSelectedProduct(productName);
+    setIsARModalOpen(true);
+  };
+
+  const handleCategoryClick = (category: string) => {
+    handleARClick(category);
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen bg-background">
+      <Header onARClick={() => handleARClick()} />
+      
+      <main>
+        <HeroSection onARClick={() => handleARClick("Featured Demo Item")} />
+        <HowItWorks />
+        <CategoryGrid onCategoryClick={handleCategoryClick} />
+        <CTADemo onARClick={() => handleARClick("Featured Demo Item")} />
+      </main>
+
+      <ARModal 
+        isOpen={isARModalOpen}
+        onClose={() => setIsARModalOpen(false)}
+        productName={selectedProduct}
+      />
     </div>
   );
 };
